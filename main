@@ -1,0 +1,38 @@
+[-
+$r = shift ;
+$http_headers_out{'content-type'} = 'text/html' ;
+$a = $r->{action};
+
+$r->app->$a($r);
+return;
+if ($r->{action} eq 'display') {
+        if(!$r->{node_exists}) {
+                $r->app->edit;
+        } else{
+		$r->app->display($r);
+	}
+  } elsif ($r->{action} eq 'edit') {
+        $r->app->edit;
+  } elsif ($r->{action} eq 'preview') {
+  } elsif ($r->{action} eq 'commit') {
+        if ( $r->{written} ) {
+		$r->app->display;
+        }else {
+		print "File not written";
+	}
+ }  elsif ($r->{action} eq 'admin') {
+	$r->app->admin;
+ }   elsif ($r->{action} eq 'admin2') {
+	$r->app->admin2;
+ }  elsif ($r->{action} eq 'search'){ 
+ 	$r->app->search ;
+ }  elsif ($r->{action} eq 'delete' ){
+	$r->app->delete;
+ }  elsif ($r->{action} eq 'randomquote' ){
+
+ } else{ 
+	#&handle_error('No valid action');
+}
+
+
+-]

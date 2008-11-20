@@ -1,0 +1,14 @@
+[- $r=shift;
+#  print Dumper $r->{announcements};	
+-]
+[$ foreach $row_a (@{$r->{announcements}}) $]
+		<b>[+ $row_a->[1] +]</b>
+		&nbsp;&nbsp;&nbsp;
+		[- $escmode=0; -]
+		<font font-family="Verdana, Arial, sans-serif;" size= "1" >
+		[+ $row_a->[0] +]
+		</font>
+                <br>
+		[- $r->{expanded} = 'block'; -]
+
+[$ endforeach $]

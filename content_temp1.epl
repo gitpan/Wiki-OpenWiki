@@ -1,0 +1,83 @@
+  <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber4" height="1">
+            <tr>
+              <td width="41%" height="1">
+
+        <strong>[+ $r->{node} +] </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="2" > <a href="javascript:collapse_content.slideit()">Show / Hide</a> </font>~;
+
+        [- 
+	my $text_edit_section = @{$node_details{metadata}->{editable}}->[0] ne 'admin'?qq~ <b><a href="$ENV{SCRIPT_NAME}/edit/$node_name">Edit Section</a></b>~ :$hash{isadmin}==1?qq~ <b><a href="$ENV{SCRIPT_NAME}/edit/$node_name">Edit Section</a></b>~:'You cannot edit this page';
+	-]
+
+              </td>
+              <td width="59%" height="1" align="left" valign="top">
+              [+ $text_edit_section =]
+                      &nbsp;&nbsp;&nbsp;&nbsp; Other Versions:
+                <select name="version" onchange="document.location.href='[+ $ENV{SCRIPT_NAME} +]/display/[+ $r->{node} +]/?version='+this.value">
+                
+	[-
+		my @versions = $r->{config}->{wiki}->list_node_all_versions("$r->{node}");
+                foreach(@versions){
+                                my $selected = $r->{version} eq $_->{version} ? 'selected':'';
+                                print "<option value=\"$_->{version}\" $selected>$_->{version} on $_->{last_modified}</option>";
+                }
+print qq~</select> &nbsp;&nbsp;&nbsp;&nbsp; ~;
+        $r->{version}=$r->{version}||$versions[0]->{version}; #Sets the version variable 
+
+        print $r->{isadmin}==1?qq~Delete <a href="javascript:if(confirm('If you press Ok then this version will be deleted. This change is irreversible.')){document.location.href='$ENV{SCRIPT_NAME}/delete/$r->{node}/?version=$r->{version}';}">Version</a> <a href="javascript:if(confirm('If you press Ok then all versions will be deleted. This change is irreversible.')){document.location.href='$ENV{SCRIPT_NAME}/delete/$r->{node}/?version=all';}">All Versions</a>~:'';
+        print qq~</td>~;
+-]
+
+            </tr>
+            <tr>
+   <td width="100%" height="19" colspan="2">
+                <div id="content">
+
+                print $cooked;
+	[$ if $r->{action} ne 'search' $]
+                <h6>Last Edited by : [+ $r->{node_details}->{metadata}{name}[0] +] on  [+ $r->{node_details}->{metadata}{dated}[0]. +] </h6>
+        [$ else $]
+                [$ foreach $a (@{$hash{node}} $]
+                        <a href="[+$ENV{SCRIPT_NAME} +]/display/[+ $a +]">[+ $_ +]</a> <br>
+                [$ endforeach $]
+        [$ endif $]
+        </div>
+<script type="text/javascript">
+
+//Syntax: var uniquevar=new animatedcollapse("DIV_id", animatetime_milisec, enablepersist(true/fase), [initialstate] )
+var collapse_content=new animatedcollapse("content", 1000, false,'block')
+
+    </script>
+
+
+        </td>
+</tr>
+          </table>
+<p>&nbsp;</p>
+          <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber4" height="1">
+            <tr>
+              <td width="41%" height="1">
+<h3>Links to this page</h3>
+</td>
+ </tr>
+<tr>
+              <td width="41%" height="1">
+
+[-
+	        my $cat_req = $r->{config}->{node_config}->{$r->{node}};
+#		print OUT Dumper ($r->{config}->{node_config});
+                my @nodes_list = $r->{config}->{wiki}->list_nodes_by_metadata(
+                        metadata_type  => "category",
+                        metadata_value => $cat_req,
+                        ignore_case    => 1,
+                );
+                foreach (@nodes_list){
+                                print qq~<a href="$ENV{SCRIPT_NAME}/display/$_">$_</a> <br>~;
+                }
+print "</td>";
+-]
+
+
+            </tr>
+          </table>
+
+

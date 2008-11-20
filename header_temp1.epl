@@ -1,0 +1,13 @@
+[- $r = shift; -]
+ <!--  <div id="container"> -->
+ <div id="logo">
+ <h1><span class="pink">[+ $r->{config}->{sitename} +]</span>.</h1>
+ </div>
+     <div id="search">
+      <form action="[+ $ENV{SCRIPT_NAME} +]" method=post>
+     <input type="text" size="15" name="node" /> <button type="submit">search</button>
+	<input type="hidden" name="action" value="search">
+	
+     </form>
+   </div>
+

@@ -1,0 +1,16 @@
+[- 
+		my $r = shift;
+		my $cat_req = $r->{config}->{node_config}->{$r->{node}};
+                @nodes_list = $r->{config}->{wiki}->list_nodes_by_metadata(
+                        metadata_type  => "category",
+                        metadata_value => $cat_req,
+                        ignore_case    => 1,
+                );
+
+
+-]
+
+[$ foreach $node (@nodes_list ) $]
+<a href="[+ $ENV{SCRIPT_NAME} +]/display/[+ $node +]">[+ $node +]</a> <div id="br"></div>
+[$ endforeach $]
+

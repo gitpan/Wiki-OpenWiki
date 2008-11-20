@@ -1,0 +1,26 @@
+[-
+	$r = shift;
+-]
+ <div id="navlist">
+<ul>
+
+ <li><a href="[+ $ENV{SCRIPT_NAME} +]/display/HomePage">Home</a></li>
+    <li><a href="javascript:var n=prompt('Enter the page title name','');document.location.href='[+ $ENV{SCRIPT_NAME} +]/edit/'+n;">Create New Page</a></li>
+    <li><a href="javascript:var n=prompt('Enter the text to search for.','');document.location.href='[+ $ENV{SCRIPT_NAME} +]/search/'+n;">Search</a></li>
+
+	[$ foreach $meta ( @ { $r->{config}->{meta} } ) $]
+	<li><a href="[+ $ENV{SCRIPT_NAME} +]/display/[+ $meta->{type} +]">[+ $meta->{name} +]</a></li>
+	[$ endforeach $]
+
+    <li><a href="[+ $ENV{SCRIPT_NAME} +]/display/Pictures">Pictures </a></li>
+    <li><a href="[+ $ENV{SCRIPT_NAME} +]/display/Events">Events</a></li>
+    <li><a href="[+ $ENV{SCRIPT_NAME} +]/display/FAQ">FAQ</a></li>
+    <li><a href="[+ $ENV{SCRIPT_NAME} +]/display/Contributors">Contributors</a></li>
+    <li><a href="[+ $ENV{SCRIPT_NAME} +]/display/Links">Links</a></li>
+
+    <p><li><a href="[+ $ENV{SCRIPT_NAME}+]/display/ContactAdmin">Contact Admin</a></li>
+       <li><a href="[+ $ENV{SCRIPT_NAME}+]/admin">Admin</a></li>
+</ul>
+</div>
+
+

@@ -1,0 +1,17 @@
+[!
+                print "Exiting now";
+		sub cleanup
+                {
+                        while (($name, $query) = each (%domain::query))
+                        {
+                                $query->finish();
+                        }
+                        $domain::dbh->disconnect();
+                }
+
+                sub clean_exit
+                {
+                        cleanup();
+#                        exit();
+                }
+        !]

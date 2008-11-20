@@ -1,0 +1,116 @@
+[- $r = shift; -]
+[$ if $http_headers_out{'location'} $] 
+[- return 0 ; -]
+[$ endif $]
+[$ if $r->{template} eq 'temp1' $]
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+<head>
+<meta http-equiv="expires" content="-1" /> 
+ <link rel="stylesheet" type="text/css" href="/style.css" media="screen, tv, projection" />
+<meta http-equiv="Content-Language" content="en-gb">
+ <meta http-equiv="content-type" content="application/xhtml; charset=UTF-8" />
+<title>[+ $r->{config}->{sitename} +]</title>
+
+<script type="text/javascript" src="/animatedcollapse.js">
+
+/***********************************************
+* Animated Collapsible DIV- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for this script and 100s more
+***********************************************/
+
+</script>
+
+</head>
+
+        <body >
+		<div id="container"> 
+            [- Execute ('header_temp1.epl') -]
+<div class="br"></div>
+                    [- Execute ('menuleft_temp1.epl') -]
+			 <div id="content">
+			 <h3>&rsaquo; Announcements <font size="2" > <a href="javascript:collapse_announce.slideit()">Show / Hide</a> </font></h3>
+				<div id="announce"> 
+			[- Execute ('announcement_temp1.epl')  -]
+			</div>
+			<script type="text/javascript">
+
+				//Syntax: var uniquevar=new animatedcollapse("DIV_id", animatetime_milisec, enablepersist(true/fase), [initialstate] )
+				var collapse_announce=new animatedcollapse("announce", 1000, false,'block')
+
+			</script>
+			<div class="br"></div><br> 
+			<h3>&rsaquo; [+ $r->{node} +] <font size="2" > <a href="javascript:collapse_con.slideit()">Show / Hide</a> </font> 
+			&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+			 Other Versions:
+	                <select name="version" onchange="document.location.href='[+ $ENV{SCRIPT_NAME} +]/display/[+ $r->{node} +]/?version='+this.value">
+
+                [$ foreach $version(@{$r->{versions}}) $] 
+                                [- $selected = $r->{version} eq $version->{version} ? 'selected':''; -]
+                                <option value="[+ $version->{version} +]" [+ $selected +]>[+ $version->{version} +] on [+ $version->{last_modified} +]</option>
+                [$ endforeach $]
+</select> &nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+[-
+{$escmode=0;
+ print OUT  $r->{node_details}->{metadata}->{editable}[0] ne 'admin'?qq~ <b><a href="$ENV{SCRIPT_NAME}/edit/$r->{node}">Edit Section</a></b>~ :$udat{'~logged_in'}==1?qq~ <b><a href="$ENV{SCRIPT_NAME}/edit/$r->{node}">Edit Section</a></b>~:'You cannot edit this page'
+}
+ -]
+
+		[$ if $udat{'~logged_in'} $]
+			Delete <a href="javascript:if(confirm('If you press Ok then this version will be deleted. This change is irreversible.')){document.location.href='[+ $ENV{SCRIPT_NAME} +]/delete/[+ $r->{node} +]/?version=[+ $r->{version} +]';}">Version</a> <a href="javascript:if(confirm('If you press Ok then all versions will be deleted. This change is irreversible.')){document.location.href='[+ $ENV{SCRIPT_NAME} +]/delete/[+ $r->{node} +]/?version=all';}">All Versions</a>
+		[$ endif $]
+			
+			<div id="con"> 
+                    [- Execute ('*')  -]
+			</div>
+			<script type="text/javascript">
+	
+			//Syntax: var uniquevar=new animatedcollapse("DIV_id", animatetime_milisec, enablepersist(true/fase), [initialstate] )
+			var collapse_con=new animatedcollapse("con", 1000, false,'block')
+
+			    </script>
+			<br>
+		
+			 <h3>&rsaquo; Links To this Page <font size="2" > <a href="javascript:collapse_links.slideit()">Show / Hide</a> </font></h3>
+                         <div id="links">
+			
+			[- Execute ('links.epl') -]
+
+			</div>
+			<script type="text/javascript">
+
+                        //Syntax: var uniquevar=new animatedcollapse("DIV_id", animatetime_milisec, enablepersist(true/fase), [initialstate] )
+                        var collapse_links=new animatedcollapse("links", 1000, false,'block')
+
+                            </script>
+
+
+</div>
+	<div class="br"></div> 
+
+            [- Execute ('footer_temp1.epl') -]  
+</div>
+        </body>
+    </html>
+[$ elsif $r->{template} eq 'tempedit' $]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+<head>
+<script language="JavaScript" type="text/javascript" src="/rte/richtext.js"></script>
+<title>Edit - [+ $r->{config}->{sitename} +]</title>
+<meta http-equiv="expires" content="-1" />
+</head>
+        <body bgcolor="#ffffff">
+ [- Execute ('*') -]
+	 </body>
+    </html>
+[$ else $]
+	No proper template   
+[$ endif $]
